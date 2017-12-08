@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="/static/style.css" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+{% block body %}
+{% if session['logged_in'] %}
+<p>You're logged in already!</p>
+{% else %}
+ 
+ <script>
+    var abc = 10
+    var positive_percent = {{ positive }}
+    var negative_percent = {{ negative }}
+ </script>
+<form action="{{ url_for('analyse') }}" method="POST">
+	<div class="login">
+		<div class="login-screen">
+			<div class="app-title">
+               <span style="padding: 7px"><img style="width: 50px" src="http://redhint.com/wp-content/uploads/2017/09/Twitter.jpg" /></span>
+				<span style="font-size: 30px">Twitter Feed Sentiment Analyser</span>
+			</div>
+ 
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="Type ... (Eg. Software Design)" name="text">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+ 
+                <input type="submit" value="Analyse" class="btn btn-primary btn-large btn-block" >
+			    <br>
+			</div>
+{#            <div>#}
+{#                {{ sentiment_text }}#}
+{#            </div>#}
+            <canvas id="myChart"></canvas>
+            {% for feed in feeds %}
+                <div class="{{ feed["sentiment"] }}" style="white-space: pre-line">
+                    {{ feed["user"]["screen_name"] }}
+                    {{ feed["text"] }}
+                    <hr>
+                </div>
+            {% endfor %}
+
+		</div>
+	</div>
+</form>
+ 
+{% endif %}
+{% endblock %}
+<script src="static/script.js"></script>
